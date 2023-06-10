@@ -7,8 +7,12 @@ export default function () {
   });
 
   const container = document.querySelector('#container');
+  const canvas = document.createElement('canvas');
+  canvas.width=300;
+  canvas.height=300;
 
-  container.appendChild(renderer.domElement);
+  //container.appendChild(renderer.domElement);
+container.appendChild(canvas);
 
   const canvasSize = {
     width: window.innerWidth,
