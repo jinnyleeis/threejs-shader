@@ -14,6 +14,8 @@ export default function () {
   //container.appendChild(renderer.domElement);
 container.appendChild(canvas);
 
+const gl =canvas.getContext('webgl');
+
   const canvasSize = {
     width: window.innerWidth,
     height: window.innerHeight,
