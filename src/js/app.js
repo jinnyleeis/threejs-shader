@@ -16,6 +16,25 @@ container.appendChild(canvas);
 
 const gl =canvas.getContext('webgl');
 
+//---- 쉐이더 ---//
+const vertexShader = gl.createShader(gl.VERTEX_SHADER);
+gl.shaderSource(vertexShdaer,"...vertex shader code 내용...");//객체에 코드 부착 
+gl.compileShader(vertexShaer); // 컴파일 할 수 있게 된다. 
+
+const fragmentShadaer = gl.createShader(gl.FRAGMENT_SHADER);
+gl.shaderSource(fragmentShadaer,"...FRAGMENT shader code 내용...");//객체에 코드 부착 
+gl.compileShader(fragmentShader); // 컴파일 할 수 있게 된다. 
+
+//둘을 하나의 프로그램으로 연결해주는 과정 
+const program = gl.createProgram();
+gl.attachShader(program,vertexShader);
+gl.attachShader(program,fragmentShadaer);
+
+gl.linkProgram(program);
+gl.useProgram(program);
+
+
+
   const canvasSize = {
     width: window.innerWidth,
     height: window.innerHeight,
