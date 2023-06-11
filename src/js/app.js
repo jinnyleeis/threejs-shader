@@ -18,8 +18,8 @@ const gl =canvas.getContext('webgl');
 
 //---- 쉐이더 ---//
 const vertexShader = gl.createShader(gl.VERTEX_SHADER);
-gl.shaderSource(vertexShdaer,"...vertex shader code 내용...");//객체에 코드 부착 
-gl.compileShader(vertexShaer); // 컴파일 할 수 있게 된다. 
+gl.shaderSource(vertexShader,"...vertex shader code 내용...");//객체에 코드 부착 
+gl.compileShader(vertexShader); // 컴파일 할 수 있게 된다. 
 
 const fragmentShadaer = gl.createShader(gl.FRAGMENT_SHADER);
 gl.shaderSource(fragmentShadaer,"...FRAGMENT shader code 내용...");//객체에 코드 부착 
@@ -33,6 +33,16 @@ gl.attachShader(program,fragmentShadaer);
 gl.linkProgram(program);
 gl.useProgram(program);
 
+//---위에서 프로그램을 만들었으니, 해당 프로그램에 데이터를 제공해주어야 한다!--//
+//정점 데이터 넘겨주기
+const vertices = new Float32Array([-1,-1,-1,1,1,1,-1,-1,1,1,1,-1]);
+const vertexBuffer =gl.createBuffer();
+gl.bindBuffer(gl.ARRAY_BUFFER,vertexBuffer);
+gl.bufferData(gl.ARRAY_BUFFER,vertices,gl.STATIC_DRAW);//정적으로 그려주겠다.
+
+// 정점 데이터를 어떻게 해석해서 할당할지 정보를 넘겨주어야 한다! -2개의 단위로 정점 데이터를 끊어서 넘겨준다. 
+
+//
 
 
   const canvasSize = {
@@ -89,7 +99,7 @@ gl.useProgram(program);
     addEvent();
     resize();
     draw();
-  };
+  };//일단 한 번 실행 
 
   initialize();
 }
