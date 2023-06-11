@@ -18,17 +18,35 @@ const gl =canvas.getContext('webgl');
 
 //---- 쉐이더 ---//
 const vertexShader = gl.createShader(gl.VERTEX_SHADER);
-gl.shaderSource(vertexShader,"...vertex shader code 내용...");//객체에 코드 부착 
-gl.compileShader(vertexShader); // 컴파일 할 수 있게 된다. 
+gl.shaderSource(vertexShader,
+  
+  `
+  attribute vec2 position;
+  void main() {
+    gl_Position = vec4(position.x, position.y, 0.0, 1.0);
+  }
+`
+  
+  );//객체에 코드 부착 
 
-const fragmentShadaer = gl.createShader(gl.FRAGMENT_SHADER);
-gl.shaderSource(fragmentShadaer,"...FRAGMENT shader code 내용...");//객체에 코드 부착 
+  gl.compileShader(vertexShader); // 컴파일 할 수 있게 된다. 
+
+const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
+gl.shaderSource(
+  fragmentShader,
+  `
+   precision mediump float; //정밀도 지정 - 부동소수점을 특정한 자릿수까지 잘라서 
+   void main(){
+    gl_FragColor=vec4(1.0,0.0,0.0,0.9);
+  }
+  `
+);//객체에 코드 부착 
 gl.compileShader(fragmentShader); // 컴파일 할 수 있게 된다. 
 
 //둘을 하나의 프로그램으로 연결해주는 과정 
 const program = gl.createProgram();
 gl.attachShader(program,vertexShader);
-gl.attachShader(program,fragmentShadaer);
+gl.attachShader(program,fragmentShader);
 
 gl.linkProgram(program);
 gl.useProgram(program);
@@ -43,6 +61,13 @@ gl.bufferData(gl.ARRAY_BUFFER,vertices,gl.STATIC_DRAW);//정적으로 그려주�
 // 정점 데이터를 어떻게 해석해서 할당할지 정보를 넘겨주어야 한다! -2개의 단위로 정점 데이터를 끊어서 넘겨준다. 
 
 //
+const position = gl.getAttribLocation(program, 'position');
+gl.vertexAttribPointer(position,2,gl.FLOAT,false,0,0);
+
+gl.enableVertexAttribArray(position);
+//vertex-attribute을 사용가능하게끔 만들어주겠다. 
+
+gl.drawArrays(gl.TRIANGLES,0,6);
 
 
   const canvasSize = {
